@@ -1,15 +1,18 @@
 import { Box, Toolbar, Drawer } from "@mui/material";
+import { Link } from "react-router-dom";
 import Logo from "../../components/Logo";
 import { DRAWER_WIDTH } from "../../utils/helper";
 
 type SideBarProps = {
   mobileOpen: boolean;
   handleDrawerToggle: () => void;
+  handleClose: () => void;
 };
 
 export default function SideBar({
   mobileOpen,
   handleDrawerToggle,
+  handleClose,
 }: SideBarProps) {
   return (
     <Box component="div" sx={{ width: { xs: DRAWER_WIDTH, sm: 0 } }}>
@@ -20,21 +23,28 @@ export default function SideBar({
         ModalProps={{ keepMounted: true }}
         sx={{
           display: { xs: "block", sm: "none" },
+
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: DRAWER_WIDTH,
+            padding: 2,
           },
         }}
       >
-        <ul>
+        <Box component="div" >
           <Toolbar>
-            <Logo illustraion="/mock-images/logo.svg" />
+            /
+            <Logo
+              illustraion="/mock-images/logo.svg"
+              handleClose={handleClose}
+            />
           </Toolbar>
-          <li>hello</li>
-          <li>hello</li>
-          <li>hello</li>
-          <li>hello</li>
-        </ul>
+          <Box component="div">
+            <Link to="/admin/add" onClick={handleClose}>
+              Add User
+            </Link>
+          </Box>
+        </Box>
       </Drawer>
     </Box>
   );

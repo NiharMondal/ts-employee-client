@@ -7,10 +7,12 @@ import {
   MenuItem,
   Typography,
   Avatar,
+  Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
+import { NavLink } from "../../components/CustomLink";
 type TopBarProps = {
   handleDrawerToggle: () => void;
 };
@@ -18,6 +20,8 @@ type UserType = {
   name: string;
   email?: string;
 };
+
+
 export default function TopAppbar({ handleDrawerToggle }: TopBarProps) {
   const [auth, setAuth] = useState<UserType>({ name: "nihar", email: "" });
   const slicedPart = auth.name.slice(0, 1);
@@ -32,7 +36,10 @@ export default function TopAppbar({ handleDrawerToggle }: TopBarProps) {
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar
+        position="static"
+        sx={{ background: "#64748B",  }}
+      >
         <Toolbar>
           <IconButton
             size="large"
@@ -41,15 +48,20 @@ export default function TopAppbar({ handleDrawerToggle }: TopBarProps) {
             aria-label="menu"
             sx={{ mr: 2, display: { sm: "none" } }}
             onClick={handleDrawerToggle}
-
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
-          </Typography>
+
+          <Box sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}>
+            <NavLink to="/users">/</NavLink>
+          </Box>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "block" } }}>
+            <NavLink to="/admin/add">ADD USER</NavLink>
+          </Box>
+
+          <Box sx={{ flexGrow: 1, display: { xs: "block", md: "none" } }} />
           <Box>
-            {auth ? (
+            {auth.name ? (
               <React.Fragment>
                 <Avatar
                   aria-label="account of current user"
@@ -87,7 +99,7 @@ export default function TopAppbar({ handleDrawerToggle }: TopBarProps) {
               </React.Fragment>
             ) : (
               <Typography>
-                <Link to="/auth/register">Login</Link>
+                <Link to="/auth/login">Login</Link>
               </Typography>
             )}
           </Box>
