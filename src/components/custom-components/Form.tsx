@@ -1,5 +1,5 @@
-import { styled } from "@mui/material/styles";
-import { TextField } from "@mui/material";
+
+import { styled } from "@mui/material/styles";import { TextField } from "@mui/material";
 
 export const Form = styled("form")(({ theme }) => ({
   background: theme.palette.neutral.main,
@@ -17,6 +17,9 @@ export const Input = styled(TextField)(() => ({
   },
   "& label.Mui-focused": {
     color: "white",
+  },
+ " & .MuiFormHelperText-root":{
+      color: 'red'
   },
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
