@@ -1,7 +1,7 @@
 import {BaseQueryFn, createApi, FetchArgs, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { UserProps } from "../../utils/helper";
-const BASE_URL = "http://localhost:4000/api/v1/users/";
+const BASE_URL = "http://localhost:4000/api/v1/";
 
 interface CustomError {
   data: {
@@ -17,7 +17,7 @@ export const usersApi = createApi({
     //------------
     //get all users
     getAllUsers: builder.query<UserProps[], void>({
-      query: () => "users",
+      query: () => "/",
       providesTags: ["Users"],
     }),
 
@@ -25,7 +25,7 @@ export const usersApi = createApi({
     addUser: builder.mutation<void, UserProps>({
       query: (user) => {
         return {
-          url: "/add-user",
+          url: "user",
           method: "post",
           body: user,
         };
