@@ -2,12 +2,13 @@
 import { styled } from "@mui/material/styles";import { TextField } from "@mui/material";
 
 export const Form = styled("form")(({ theme }) => ({
+  
   background: theme.palette.neutral.main,
-  padding: theme.spacing(2, 2, 6, 2),
+  padding: theme.spacing(2),
   borderRadius: 8,
   color: theme.palette.neutral.contrastText,
   [theme.breakpoints.up("sm")]: {
-    padding: theme.spacing(4,6),
+    padding: theme.spacing(3),
   },
 }));
 

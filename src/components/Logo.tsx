@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
 type LogoProps = {
   illustraion: string;
-  handleClose: ()=>void
+  handleClose?: ()=>void
 };
 export default function Logo({ illustraion,handleClose }: LogoProps) {
   return (

@@ -22,7 +22,7 @@ type UserType = {
 
 
 export default function TopAppbar({ handleDrawerToggle }: TopBarProps) {
-  const [auth, setAuth] = useState<UserType>({ name: "nihar", email: "" });
+  const [auth, setAuth] = useState<UserType>({ name: "", email: "" });
   const slicedPart = auth.name.slice(0, 1);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
