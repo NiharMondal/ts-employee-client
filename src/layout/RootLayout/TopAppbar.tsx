@@ -20,9 +20,8 @@ type UserType = {
   email?: string;
 };
 
-
 export default function TopAppbar({ handleDrawerToggle }: TopBarProps) {
-  const [auth, setAuth] = useState<UserType>({ name: "", email: "" });
+  const [auth, setAuth] = useState<UserType>({ name: "nihar", email: "" });
   const slicedPart = auth.name.slice(0, 1);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -35,10 +34,7 @@ export default function TopAppbar({ handleDrawerToggle }: TopBarProps) {
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        position="static"
-        sx={{ background: "#64748B",  }}
-      >
+      <AppBar position="sticky" sx={{ background: "#64748B" }}>
         <Toolbar>
           <IconButton
             size="large"

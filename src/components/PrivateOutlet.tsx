@@ -8,12 +8,12 @@ type AuthProps={
 
 const initialState = {
   email: '',
-  name: '',
+  name: 'nihar',
   token: ''
 }
 export default function PrivateOutlet() {
   const [auth, setAuth] = useState<AuthProps>(initialState);
-  return auth.token ? <Outlet/>: (
+  return auth.name ? <Outlet/>: (
     <Navigate to="/auth/register"  />
   );
 }

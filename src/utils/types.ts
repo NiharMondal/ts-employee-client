@@ -29,16 +29,28 @@ export const selectOccupation: SelectOptionsProps = [
   { label: "Doctor", value: "Doctor" },
   { label: "Ethical Hacker", value: "Ethical Hacker" },
 ];
-export type UserProps = {
+
+export interface UserProps {
+  _id: string;
   firstName: string;
   lastName: string;
-  email: string;
   userName: string;
-  gender: string | null;
-  city: string;
-  country: string;
-  phone: string;
-  website: string
-  role: string | null;
-  profession: string | null;
+  gender: string;
+  contactInfo: {
+    email: string;
+    phone: string;
+    website: string;
+  };
+  address: {
+    city: string;
+    country: string;
+  };
+
+  role: string;
+  profession: string;
+}
+
+export type ResponseUser = {
+  user: UserProps;
+  success: string;
 };

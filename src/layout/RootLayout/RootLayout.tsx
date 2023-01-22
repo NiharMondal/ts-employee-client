@@ -21,7 +21,7 @@ export default function RootLayout() {
         handleClose={handleClose}
         handleDrawerToggle={handleDrawerToggle}
       />
-      <Box  component="main" sx={{ p: 3}}>
+      <Box  component="main" sx={{ p: 2}}>
         <Outlet />
       </Box>
     </React.Fragment>

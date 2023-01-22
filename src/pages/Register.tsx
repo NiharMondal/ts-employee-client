@@ -13,10 +13,13 @@ import Logo from "../components/Logo";
 
 export default function Register() {
   const nevigate = useNavigate();
-  const [show, setShow] = useState<boolean>(false);
+  const [show, setShow] = useState(false);
   const showPass = () => {
     setShow(!show);
   };
+
+
+
   return (
     <Container sx={{ mx: "auto", mt: 5 }}>
       <Box component="div" sx={{ mb: { xs: 3, sm: 0 } }}>

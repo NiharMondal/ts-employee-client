@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Form, Input } from "../components/custom-components/Form";
 
 import { useAddUserMutation } from "../redux/api/usersApi";
-import { selectOccupation, selectOptions, UserProps } from "../utils/helper";
+import { selectOccupation, selectOptions, UserProps } from "../utils/types";
 
 export default function AddUser() {
   const [userInfo, setUserInfo] = useState<UserProps>({} as UserProps);

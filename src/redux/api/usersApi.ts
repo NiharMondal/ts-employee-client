@@ -1,73 +1,58 @@
-import {
-  BaseQueryFn,
-  createApi,
-  FetchArgs,
-  fetchBaseQuery,
-} from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { UserProps } from "../../utils/helper";
+//import User model from the utils folder
+import { UserProps } from "../../utils/types";
+
+
+
 const BASE_URL = "http://localhost:4000/api/v1/";
 
-interface CustomError {
-  data: {
-    message: string;
-    errors: any;
-  };
-}
 export const usersApi = createApi({
   reducerPath: "usersApi",
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }) as BaseQueryFn<
-    string | FetchArgs,
-    unknown,
-    CustomError,
-    {}
-  >,
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   tagTypes: ["Users"],
   endpoints: (builder) => ({
     //add user
     addUser: builder.mutation<void, UserProps>({
-      query: (user) => {
-        return {
-          url: "user",
-          method: "post",
-          body: user,
-        };
-      },
+      query: (user) => ({
+        url: "user",
+        method: "post",
+        body: user,
+      }),
     }),
 
     //get all users
-    getAllUsers: builder.query<UserProps[], void>({
-      query: () => "/user",
+    allUsers: builder.query<UserProps[], void>({
+      query: () => "user",
       providesTags: ["Users"],
     }),
 
     //get single user by id
-    getSingleUser: builder.query<string, FetchArgs>({
-      query: (id) => {
-        return {
-          url: `user/${id}`,
-          params: id,
-        };
-      },
-      providesTags: ["Users"],
+    user: builder.query<UserProps, string | undefined>({
+      query: (id) => `user/${id}`,
     }),
-
+    //update user
+    updateUser: builder.mutation<void, UserProps>({
+      query: ({ _id, ...rest }) => ({
+        url: `user/${_id}`,
+        method: "put",
+        body: rest,
+      }),
+    }),
     //delete user by id
-    deleteUser: builder.mutation<string, FetchArgs>({
-      query: (id) => {
-        return {
-          url: `user/${id}`,
-          method: "delete",
-          params: id,
-        };
-      },
+    deleteUser: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `user/${id}`,
+        method: "delete",
+      }),
     }),
   }),
 });
 
 export const {
-  useGetAllUsersQuery,
-  useGetSingleUserQuery,
+  useAllUsersQuery,
+  useUserQuery,
   useAddUserMutation,
+  useUpdateUserMutation,
   useDeleteUserMutation,
 } = usersApi;

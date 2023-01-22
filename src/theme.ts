@@ -53,7 +53,17 @@ export const theme = createTheme({
       },
     },
     h3: {
-      fontSize: 30,
+      fontSize: 22,
+      fontWeight: "bold",
+      borderRadius: 1,
+      "@media (min-width:600px)": {
+        fontSize: "1.7rem",
+      },
+    },
+    h4: {
+      fontSize: 23,
+      fontWeight: "bold",
+      borderRadius: 2,
     },
     body1: {
       fontSize: 18,

@@ -18,15 +18,16 @@ export const router = createBrowserRouter([
     path: "/",
     element: <RootLayout />,
     children: [
-      { path: "/", element: <Navigate to="users" replace/> },
+      { path: "/", element: <Navigate to="/users" /> },
       {
-        path: "users",
+        path: "/users",
         element: <App />,
       },
       {
         path: "users/:userId",
         element: <SingleUser />,
       },
+
       {
         path: "/admin",
         element: <PrivateOutlet />,

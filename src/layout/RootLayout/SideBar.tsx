@@ -1,7 +1,7 @@
 import { Box, Toolbar, Drawer } from "@mui/material";
 import { Link } from "react-router-dom";
 import Logo from "../../components/Logo";
-import { DRAWER_WIDTH } from "../../utils/helper";
+import { DRAWER_WIDTH } from "../../utils/types";
 
 type SideBarProps = {
   mobileOpen: boolean;
@@ -31,7 +31,7 @@ export default function SideBar({
           },
         }}
       >
-        <Box component="div" >
+        <Box component="div">
           <Toolbar>
             /
             <Logo

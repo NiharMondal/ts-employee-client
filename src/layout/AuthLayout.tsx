@@ -1,11 +1,9 @@
-
-import {Outlet} from 'react-router-dom'
-
-
+import { Outlet } from "react-router-dom";
+import { Box } from "@mui/material";
 export default function AuthLayout() {
   return (
-    <div>
-      <Outlet/>
-    </div>
-  )
+    <Box component="main" sx={{ p: 1 }}>
+      <Outlet />
+    </Box>
+  );
 }
