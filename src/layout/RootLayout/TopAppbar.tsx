@@ -48,9 +48,11 @@ export default function TopAppbar({ handleDrawerToggle }: TopBarProps) {
           </IconButton>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}>
-            <NavLink to="/users">/</NavLink>
+            <NavLink to="/users">
+              HOME
+            </NavLink>
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "block" } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}>
             <NavLink to="/admin/add">ADD USER</NavLink>
           </Box>
 

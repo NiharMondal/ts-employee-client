@@ -1,33 +1,22 @@
 import { Container, Grid, Typography, MenuItem, Button } from "@mui/material";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { Form, Input } from "../components/custom-components/Form";
 
 import { useAddUserMutation } from "../redux/api/usersApi";
 import { selectOccupation, selectOptions, UserProps } from "../utils/types";
+import CustomisedToaster from "../components/CustomisedToaster";
 
 export default function AddUser() {
   const [userInfo, setUserInfo] = useState<UserProps>({} as UserProps);
 
-  const [addUser, { data, error: formError }] = useAddUserMutation();
-
-  const [message, setMessage] = useState<void | any>();
-
-  const [error, setError] = useState<null | any>();
+  const [addUser, { data, isSuccess }] = useAddUserMutation();
 
   useEffect((): void => {
-    setMessage(data);
-    if (message) {
-      toast.success(message?.success);
+    if (data && isSuccess) {
+      toast.success("User created successfully");
     }
-  }, [data, message]);
-
-  useEffect((): void => {
-    setError(formError);
-    if (error?.data) {
-      toast.error(error?.data?.error);
-    }
-  }, [error?.data, formError]);
+  }, [data, isSuccess]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserInfo({
@@ -39,15 +28,15 @@ export default function AddUser() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      await addUser(userInfo);
-    } catch (err) {
-      console.log(err);
+      await addUser(userInfo).unwrap();
+    } catch (err: any) {
+      toast.error(err.data.error);
     }
   };
   return (
-    <Container sx={{ mx: "auto" }}>
+    <Container sx={{ mx: "auto", mt: 4 }}>
       <Form onSubmit={handleSubmit}>
-        <Toaster />
+        <CustomisedToaster />
         <Grid container spacing={4} sx={{ mb: 2 }}>
           <Grid item xs={12} md={6}>
             <Typography variant="h1" sx={{ py: 3 }}>

@@ -48,6 +48,7 @@ export interface UserProps {
 
   role: string;
   profession: string;
+  createdAt?: string;
 }
 
 export type ResponseUser = {

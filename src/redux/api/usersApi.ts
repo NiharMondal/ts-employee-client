@@ -3,8 +3,6 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 //import User model from the utils folder
 import { UserProps } from "../../utils/types";
 
-
-
 const BASE_URL = "http://localhost:4000/api/v1/";
 
 export const usersApi = createApi({
@@ -19,6 +17,7 @@ export const usersApi = createApi({
         method: "post",
         body: user,
       }),
+      invalidatesTags: ["Users"],
     }),
 
     //get all users
@@ -38,13 +37,15 @@ export const usersApi = createApi({
         method: "put",
         body: rest,
       }),
+      invalidatesTags: ["Users"],
     }),
     //delete user by id
-    deleteUser: builder.mutation<void, string>({
+    deleteUser: builder.mutation<string, string >({
       query: (id) => ({
         url: `user/${id}`,
         method: "delete",
       }),
+      invalidatesTags: ["Users"],
     }),
   }),
 });

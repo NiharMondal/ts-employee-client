@@ -26,6 +26,7 @@ export const router = createBrowserRouter([
       {
         path: "users/:userId",
         element: <SingleUser />,
+        
       },
 
       {

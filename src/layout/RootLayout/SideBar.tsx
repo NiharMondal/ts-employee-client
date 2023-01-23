@@ -33,9 +33,9 @@ export default function SideBar({
       >
         <Box component="div">
           <Toolbar>
-            /
+            
             <Logo
-              illustraion="/mock-images/logo.svg"
+              illustraion="/mock-images/logo.png"
               handleClose={handleClose}
             />
           </Toolbar>
