@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 //import User model from the utils folder
-import { UserProps } from "../../utils/types";
+import { TUser, TUserResponse } from "../../utils/types";
 
 const BASE_URL = "http://localhost:4000/api/v1/";
 
@@ -11,7 +11,7 @@ export const usersApi = createApi({
   tagTypes: ["Users"],
   endpoints: (builder) => ({
     //add user
-    addUser: builder.mutation<void, UserProps>({
+    addUser: builder.mutation<void, TUser>({
       query: (user) => ({
         url: "user",
         method: "post",
@@ -21,17 +21,19 @@ export const usersApi = createApi({
     }),
 
     //get all users
-    allUsers: builder.query<UserProps[], void>({
+    allUsers: builder.query<TUserResponse[], void>({
       query: () => "user",
       providesTags: ["Users"],
     }),
 
     //get single user by id
-    user: builder.query<UserProps, string | undefined>({
+    user: builder.query<TUserResponse, string>({
       query: (id) => `user/${id}`,
+      providesTags: ["Users"],
     }),
+
     //update user
-    updateUser: builder.mutation<void, UserProps>({
+    updateUser: builder.mutation<void, TUserResponse>({
       query: ({ _id, ...rest }) => ({
         url: `user/${_id}`,
         method: "put",
@@ -40,10 +42,13 @@ export const usersApi = createApi({
       invalidatesTags: ["Users"],
     }),
     //delete user by id
-    deleteUser: builder.mutation<string, string >({
+    deleteUser: builder.mutation<void, string>({
       query: (id) => ({
         url: `user/${id}`,
         method: "delete",
+        headers: {
+          
+        }
       }),
       invalidatesTags: ["Users"],
     }),

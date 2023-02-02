@@ -1,26 +1,32 @@
-
-import { styled } from "@mui/material/styles";import { TextField } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { TextField } from "@mui/material";
 
 export const Form = styled("form")(({ theme }) => ({
-  
   background: theme.palette.neutral.main,
-  padding: theme.spacing(2),
-  borderRadius: 8,
   color: theme.palette.neutral.contrastText,
+  borderRadius: 8,
+  padding: theme.spacing(2),
+  marginBottom:theme.spacing(3),
   [theme.breakpoints.up("sm")]: {
-    padding: theme.spacing(3),
+    padding: theme.spacing(4, 8),
+    
+    
   },
 }));
 
-export const Input = styled(TextField)(() => ({
+export const Input = styled(TextField)(({ theme }) => ({
+  margin: theme.spacing(.1, 0),
+  [theme.breakpoints.up("sm")]: {
+    margin: theme.spacing(.3,0),
+  },
   "& .MuiInputLabel-root, .MuiOutlinedInput-input": {
     color: "#fff",
   },
   "& label.Mui-focused": {
     color: "white",
   },
- " & .MuiFormHelperText-root":{
-      color: 'red'
+  " & .MuiFormHelperText-root": {
+    color: "red",
   },
   "& .MuiOutlinedInput-root": {
     "& fieldset": {

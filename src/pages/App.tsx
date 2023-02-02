@@ -1,57 +1,54 @@
-import { Box, Grid, Typography, LinearProgress } from "@mui/material";
-import Paper from "@mui/material/Paper";
+import {
+  LinearProgress,
+  Container,
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  Box,
+  Paper,
+  Typography,
+} from "@mui/material";
+
 import { useAllUsersQuery } from "../redux/api/usersApi";
-import { useNavigate } from "react-router-dom";
 import Error from "../components/Error";
+import { CustomTableCell } from "../components/custom-components/TableCell";
+import CustomisedToaster from "../components/CustomisedToaster";
+import UserTable from "../components/UserTable";
 
 export default function App() {
-  const navigate = useNavigate();
-  const { data, error, isLoading, isSuccess } = useAllUsersQuery();
-
-  const readMore = (id: string) => {
-    if (typeof id !== "undefined") {
-      navigate(`${id}`);
-    }
-  };
+  const { data, error, isLoading } = useAllUsersQuery();
 
   return (
     <Box>
       {isLoading && <LinearProgress sx={{ height: "5px", width: "100%" }} />}
-      <Grid container spacing={3} sx={{ p: 2 }} justifyContent="center">
+      <Container>
         {error && <Error />}
-        {isSuccess &&
-          data?.map((user, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <Paper sx={{ p: 2 }}>
-                <Typography variant="h6">
-                  Fullname: {user.firstName} {user.lastName}
-                </Typography>
+        <CustomisedToaster />
+        <TableContainer component={Paper} sx={{ mt: 5 }}>
+          <Table size="small" aria-label="a dense table">
+            <TableHead>
+              <TableRow sx={{ backgroundColor: "black" }}>
+                {["ID", "Fullname", "Email", "Gender", "Role"].map(
+                  (tHead, index) => (
+                    <CustomTableCell align="right" key={index}>
+                      {tHead}
+                    </CustomTableCell>
+                  )
+                )}
+                <CustomTableCell align="center">Action</CustomTableCell>
+              </TableRow>
+            </TableHead>
 
-                <Typography variant="body1">
-                  Gender: {user.gender}
-                </Typography>
-
-                <Typography variant="subtitle1">
-                  Country: {user.address.country}
-                </Typography>
-                <Typography variant="subtitle1" color='white' sx={{ background: "#64748B",pl:1 }}>
-                  Role: {user.role}
-                </Typography>
-                <Typography
-                  onClick={() => readMore(user._id)}
-                  variant="subtitle1"
-                  sx={{
-                    textAlign: "right",
-                    cursor: "pointer",
-                    color: "#053e85",
-                  }}
-                >
-                  Read more
-                </Typography>
-              </Paper>
-            </Grid>
-          ))}
-      </Grid>
+            {data && <UserTable data={data} />}
+          </Table>
+        </TableContainer>
+        {data && data.length === 0 && (
+          <Typography textAlign="center" variant="h4" sx={{ py: 3 }}>
+            There are no records
+          </Typography>
+        )}
+      </Container>
     </Box>
   );
 }

@@ -12,35 +12,23 @@ import toast from "react-hot-toast";
 import { useParams, useNavigate } from "react-router-dom";
 import CustomisedToaster from "../components/CustomisedToaster";
 import Error from "../components/Error";
-import { useUserQuery, useDeleteUserMutation } from "../redux/api/usersApi";
+import { useUserQuery } from "../redux/api/usersApi";
 
 export default function SingleUser() {
   const navigate = useNavigate();
-  const [deleteUser, { data: deleteData, }] =
-    useDeleteUserMutation();
+
 
   const { userId } = useParams();
 
-  const { data, error, isLoading, isSuccess } = useUserQuery(userId);
+  const { data, error, isLoading, isSuccess } = useUserQuery(userId!);
+  console.log(data);
+  
+  
 
-
-  const handleDelete = async (id: string) => {
-    try {
-      if (id) {
-        await deleteUser(id);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  const goEditPage = (id: string) => {
+    navigate(`/admin/edit/${id}`);
   };
-  useEffect(() => {
-    if (deleteData) {
-      toast.success("User deleted successfully!");
-      setTimeout(() => {
-        navigate("/users");
-      }, 1000);
-    }
-  }, [deleteData, navigate]);
+  
   return (
     <React.Fragment>
       {isLoading && <LinearProgress sx={{ height: "5px", width: "100%" }} />}
@@ -55,28 +43,38 @@ export default function SingleUser() {
               justifyContent="space-between"
               direction={{ xs: "column-reverse", sm: "row" }}
             >
-              <Grid item xs={10} sm={9} md={6}>
+              <Grid item xs={10} sm={9} md={10}>
                 <Box component="div">
                   <Typography variant="h3" color="#3390FF">
-                    Personal Information{" "}
+                    Personal Information{"  "}
+                    {/* {!data.createdAt && (
+                      <span style={{ fontSize: "17px", color: "red" }}>
+                        [This is a demo data. You can not delete this record]
+                      </span>
+                    )} */}
                   </Typography>
+
                   <Typography variant="h6">
                     Fullname: {data.firstName} {data.lastName}
                   </Typography>
                   <Typography variant="h6">
                     Username: {data.userName}
                   </Typography>
-                  <Typography variant="h6">Gender: {data.gender}</Typography>
+                  <Typography variant="h6">
+                    Gender: {data.gender}
+                  </Typography>
                 </Box>
               </Grid>
               <Grid item xs={12} sm={3} md={2}>
                 <Box>
-                  <Button>Edit</Button>
-                  {data.createdAt && (
+                  <Button onClick={() => goEditPage(data._id)}>
+                    Edit
+                  </Button>
+                  {/* {data.createdAt && (
                     <Button onClick={() => handleDelete(data._id)}>
                       Delete
                     </Button>
-                  )}
+                  )} */}
                 </Box>
               </Grid>
             </Grid>
@@ -91,15 +89,7 @@ export default function SingleUser() {
                   >
                     Contact Information
                   </Typography>
-                  <Typography variant="h6">
-                    Email Address: {data.contactInfo.email}
-                  </Typography>
-                  <Typography variant="h6">
-                    Phone Number: {data.contactInfo.phone}
-                  </Typography>
-                  <Typography variant="h6">
-                    Website: {data.contactInfo.website}
-                  </Typography>
+                  
                 </Box>
               </Grid>
               <Grid item xs md={4}></Grid>
@@ -116,12 +106,7 @@ export default function SingleUser() {
                   >
                     Permanent Address
                   </Typography>
-                  <Typography variant="h6">
-                    City: {data.address.city}
-                  </Typography>
-                  <Typography variant="h6">
-                    Country: {data.address.country}
-                  </Typography>
+                  
                 </Box>
               </Grid>
               <Grid item xs></Grid>
@@ -140,10 +125,10 @@ export default function SingleUser() {
                   >
                     Other Details
                   </Typography>
-                  <Typography variant="h6">User Role: {data.role}</Typography>
                   <Typography variant="h6">
-                    Profession: {data.profession}
+                    User Role: {data.role}
                   </Typography>
+                  
                 </Box>
               </Grid>
             </Grid>
