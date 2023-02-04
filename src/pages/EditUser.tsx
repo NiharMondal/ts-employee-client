@@ -1,12 +1,12 @@
-import { Container, Grid, Typography,  Button } from "@mui/material";
-import toast from "react-hot-toast";
+import { Container, Grid, Typography, Button, Stack } from "@mui/material";
+import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
-import { Form, Input } from "../components/custom-components/Form";
+import { Form, Input } from "../components/custom-styles/Form";
 import { useUpdateUserMutation } from "../redux/api/usersApi";
-import {  TUserResponse } from "../utils/types";
+import { TUserResponse } from "../utils/types";
 import CustomisedToaster from "../components/CustomisedToaster";
 import { useUserQuery } from "../redux/api/usersApi";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function EditUser() {
   const navigate = useNavigate();
@@ -14,7 +14,6 @@ export default function EditUser() {
   const { userId } = useParams();
 
   const { data } = useUserQuery(userId!);
-  console.log(data);
 
   const [userInfo, setUserInfo] = useState<TUserResponse>({} as TUserResponse);
 
@@ -28,12 +27,15 @@ export default function EditUser() {
   };
 
   //handle update
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      await updateUser(userInfo).unwrap();
-      toast.success("User added successfully");
-      navigate("/users");
+      await updateUser(userInfo);
+
+      toast.success("User Updated successfully!");
+      setTimeout(() => {
+        navigate("/users");
+      }, 2000);
     } catch (err: any) {
       toast.error(err.data.error);
     }
@@ -41,11 +43,14 @@ export default function EditUser() {
 
   return (
     <Container sx={{ mt: 4 }}>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleUpdate}>
         <CustomisedToaster />
-        <Typography variant="h1" sx={{ py: 2 }}>
-          Update Information
-        </Typography>
+        <Stack sx={{ pb: 3, justifyContent: "space-between" }} direction="row">
+          <Typography variant="h1">Update Information</Typography>
+          <Button variant="contained">
+            <Link to="/users">Cancel</Link>
+          </Button>
+        </Stack>
         <Grid container spacing={4}>
           <Grid item xs={12} md={6}>
             <Input
@@ -56,6 +61,7 @@ export default function EditUser() {
               name="firstName"
               label="First Name "
               variant="outlined"
+              value={userInfo.firstName}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -67,6 +73,7 @@ export default function EditUser() {
               name="lastName"
               label="Last Name "
               variant="outlined"
+              value={userInfo.lastName}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -79,6 +86,7 @@ export default function EditUser() {
               name="email"
               label="Your Email Address "
               variant="outlined"
+              value={userInfo.email}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -90,6 +98,7 @@ export default function EditUser() {
               name="userName"
               label="Username (example: Bret) "
               variant="outlined"
+              value={userInfo.userName}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -102,6 +111,7 @@ export default function EditUser() {
               label="Gender "
               id="gender"
               variant="outlined"
+              value={userInfo.gender}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -114,6 +124,7 @@ export default function EditUser() {
               label="Age "
               id="age"
               variant="outlined"
+              value={userInfo.age}
             />
           </Grid>
           <Grid item xs={12} md={12}>
@@ -125,6 +136,7 @@ export default function EditUser() {
               name="role"
               label="Role (User, Editor, Moderator) "
               variant="outlined"
+              value={userInfo.role}
             />
           </Grid>
         </Grid>

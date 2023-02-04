@@ -6,22 +6,19 @@ import {
   Stack,
   Divider,
 } from "@mui/material";
-import { toast } from "react-hot-toast";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { TUserResponse } from "../utils/types";
 import { useDeleteUserMutation } from "../redux/api/usersApi";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type UserProps = {
   data: TUserResponse[];
 };
 
 export default function UserTable({ data }: UserProps) {
-  const [deleteUser, { data: deleteData, isSuccess, error: deleteError }] =
-    useDeleteUserMutation();
+  const [deleteUser] = useDeleteUserMutation();
   const navigate = useNavigate();
 
   //view single user record
@@ -34,23 +31,13 @@ export default function UserTable({ data }: UserProps) {
   //handle delete user record
   const handleDelete = async (id: string) => {
     try {
-      if (id) {
+      if (window.confirm("Do you want to delete this record?")) {
         await deleteUser(id);
       }
     } catch (error) {
       console.log(error);
     }
   };
-
-  //shows success and error message in ui
-  useEffect(() => {
-    if (deleteData && isSuccess) {
-      toast.success("You have successfully deleted record");
-    }
-    if (deleteError) {
-      toast.error("Something went wrong!");
-    }
-  }, [deleteData, isSuccess, deleteError]);
 
   return (
     <TableBody>
@@ -73,17 +60,19 @@ export default function UserTable({ data }: UserProps) {
                 justifyContent="center"
                 divider={<Divider orientation="vertical" flexItem />}
               >
-                <Button>
+                <Button onClick={() => readMore(user._id)}>
                   <VisibilityIcon />
                 </Button>
                 <Button>
-                  <EditIcon />
+                  <Link to={`/admin/edit/${user._id}`}>
+                    <EditIcon />
+                  </Link>
                 </Button>
-                {
-                  user.createdAt&& <Button onClick={() => handleDelete(user._id)}>
-                  <DeleteIcon />
-                </Button>
-                }
+                {user.createdAt && (
+                  <Button onClick={() => handleDelete(user._id)}>
+                    <DeleteIcon />
+                  </Button>
+                )}
               </Stack>
             </TableCell>
           </TableRow>

@@ -8,7 +8,7 @@ import {
   InputAdornment,
   Button,
 } from "@mui/material";
-import { Form, Input } from "../components/custom-components/Form";
+import { Form, Input } from "../components/custom-styles/Form";
 import Logo from "../components/Logo";
 
 export default function Register() {
@@ -17,8 +17,6 @@ export default function Register() {
   const showPass = () => {
     setShow(!show);
   };
-
-
 
   return (
     <Container sx={{ mx: "auto", mt: 5 }}>

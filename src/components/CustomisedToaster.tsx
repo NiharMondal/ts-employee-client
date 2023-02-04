@@ -1,11 +1,19 @@
-import React from 'react'
-import { Toaster } from 'react-hot-toast';
+
+
+import { ToastContainer } from 'react-toastify';
 export default function CustomisedToaster() {
   return (
-    <Toaster
+    <ToastContainer
       position="top-right"
-      reverseOrder={false}
-      toastOptions={{ duration: 1000 }}
+      autoClose={1000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="colored"
     />
   );
 }

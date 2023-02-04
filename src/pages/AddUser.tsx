@@ -1,7 +1,8 @@
 import { Container, Grid, Typography, Button } from "@mui/material";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
-import { Form, Input } from "../components/custom-components/Form";
+import { Form, Input } from "../components/custom-styles/Form";
 
 import { useAddUserMutation } from "../redux/api/usersApi";
 import CustomisedToaster from "../components/CustomisedToaster";
@@ -10,17 +11,17 @@ import { initialState } from "../utils/types";
 export default function AddUser() {
   const [userInfo, setUserInfo] = useState(initialState);
 
-  const [addUser, { data, isSuccess, error ,isError}] = useAddUserMutation();
+  const [addUser, { data, isSuccess, error, isError }] = useAddUserMutation();
 
   //shows success and error message in ui
   useEffect((): void => {
     if (error && isError) {
-      toast.error("Please provide every field");
+      toast.error("Please provide every input field");
     }
     if (data && isSuccess) {
       toast.success("User created successfully");
     }
-  }, [data, isSuccess, error,isError]);
+  }, [data, isSuccess, error, isError]);
 
   //hangle change event
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

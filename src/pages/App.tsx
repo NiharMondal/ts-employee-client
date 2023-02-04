@@ -11,9 +11,9 @@ import {
 } from "@mui/material";
 
 import { useAllUsersQuery } from "../redux/api/usersApi";
+
 import Error from "../components/Error";
-import { CustomTableCell } from "../components/custom-components/TableCell";
-import CustomisedToaster from "../components/CustomisedToaster";
+import { CustomTableCell } from "../components/custom-styles/TableCell";
 import UserTable from "../components/UserTable";
 
 export default function App() {
@@ -24,7 +24,6 @@ export default function App() {
       {isLoading && <LinearProgress sx={{ height: "5px", width: "100%" }} />}
       <Container>
         {error && <Error />}
-        <CustomisedToaster />
         <TableContainer component={Paper} sx={{ mt: 5 }}>
           <Table size="small" aria-label="a dense table">
             <TableHead>

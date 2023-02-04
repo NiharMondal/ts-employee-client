@@ -8,7 +8,7 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import { Form, Input } from "../components/custom-components/Form";
+import { Form, Input } from "../components/custom-styles/Form";
 import Logo from "../components/Logo";
 
 export default function Login() {
@@ -19,10 +19,10 @@ export default function Login() {
   };
   return (
     <Container sx={{ mx: "auto", mt: 5 }}>
-      <Box component="div" sx={{mb:{xs:3, sm:0}}}>
+      <Box component="div" sx={{ mb: { xs: 3, sm: 0 } }}>
         <Logo illustraion="/mock-images/logo.png" />
       </Box>
-      <Box sx={{ background: "#64748B",p:{xs:0,sm:2},borderRadius:2 }}>
+      <Box sx={{ background: "#64748B", p: { xs: 0, sm: 2 }, borderRadius: 2 }}>
         <Grid
           container
           spacing={2}
@@ -43,7 +43,6 @@ export default function Login() {
           </Grid>
           <Grid item xs={12} sm={12} md={6}>
             <Form>
-              
               <Typography variant="h1" sx={{ py: 3 }}>
                 Login your account
               </Typography>
