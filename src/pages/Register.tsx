@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Container,
@@ -10,16 +10,62 @@ import {
 } from "@mui/material";
 import { Form, Input } from "../components/custom-styles/Form";
 import Logo from "../components/Logo";
+import { RegisterRequest, useRegisterMutation } from "../redux/api/authApi";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../redux/slice/authSlice";
+import { toast } from "react-toastify";
+import CustomisedToaster from "../components/CustomisedToaster";
 
 export default function Register() {
-  const nevigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [register, { data, isSuccess, error, isError }] = useRegisterMutation();
+
+  useEffect((): void => {
+    if (error && isError) {
+      toast.error(error as any);
+    }
+    if (data && isSuccess) {
+      toast.success("User created successfully");
+    }
+  }, [data, isSuccess, error, isError, navigate]);
+  //show and hide password
   const [show, setShow] = useState(false);
   const showPass = () => {
     setShow(!show);
   };
 
+  const [formState, setFormState] = useState<RegisterRequest>({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  //handle change input field
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormState({
+      ...formState,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  //handle register user
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const user = await register(formState).unwrap();
+       dispatch(setCredentials(user));
+      setTimeout(() => {
+        navigate("/users");
+      }, 2000);
+    } catch (e: any) {
+      toast.error(e.data.error);
+    }
+  };
   return (
     <Container sx={{ mx: "auto", mt: 5 }}>
+      <CustomisedToaster />
       <Box component="div" sx={{ mb: { xs: 3, sm: 0 } }}>
         <Logo illustraion="/mock-images/logo.png" />
       </Box>
@@ -39,33 +85,56 @@ export default function Register() {
             />
           </Grid>
           <Grid item xs={12} sm={12} md={6}>
-            <Form>
-              <Typography variant="h1" sx={{ py: 3 }}>
+            <Form onSubmit={handleRegister}>
+              <Typography variant="h1" sx={{ py: 2 }}>
                 Register your account
               </Typography>
-              <Input fullWidth label="Fullname" type="text" />
+
               <Input
+                onChange={handleChange}
                 fullWidth
-                label=" Email addrress"
-                type="email"
-                sx={{ my: 3 }}
+                label="Fullname"
+                type="text"
+                name="username"
+                autoComplete="off"
               />
 
               <Input
+                onChange={handleChange}
+                fullWidth
+                label=" Email addrress"
+                type="email"
+                name="email"
+                autoComplete="off"
+              />
+
+              <Input
+                onChange={handleChange}
                 fullWidth
                 label="Your Password"
                 id="outlined-end-adornment"
+                autoComplete="off"
                 type={show ? "text" : "password"}
-                sx={{ mb: 3 }}
+                name="password"
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
                       {show ? (
-                        <p onClick={showPass} style={{ cursor: "pointer" }}>
+                        <p
+                          onClick={showPass}
+                          style={{
+                            cursor: "pointer",
+                          }}
+                        >
                           Hide
                         </p>
                       ) : (
-                        <p onClick={showPass} style={{ cursor: "pointer" }}>
+                        <p
+                          onClick={showPass}
+                          style={{
+                            cursor: "pointer",
+                          }}
+                        >
                           Show
                         </p>
                       )}
@@ -74,9 +143,10 @@ export default function Register() {
                 }}
               />
               <Button
+                type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ py: 2, color: "darker" }}
+                sx={{ py: 2, color: "darker", mt: 1 }}
               >
                 Register
               </Button>
@@ -86,7 +156,7 @@ export default function Register() {
               >
                 You have an account?{" "}
                 <span
-                  onClick={() => nevigate("/auth/login")}
+                  onClick={() => navigate("/auth/login")}
                   style={{ cursor: "pointer", color: "#005A95" }}
                 >
                   Login

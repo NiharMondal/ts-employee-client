@@ -7,7 +7,6 @@ import { TUserResponse } from "../utils/types";
 import CustomisedToaster from "../components/CustomisedToaster";
 import { useUserQuery } from "../redux/api/usersApi";
 import { Link, useNavigate, useParams } from "react-router-dom";
-
 export default function EditUser() {
   const navigate = useNavigate();
   const [updateUser] = useUpdateUserMutation();
@@ -15,7 +14,7 @@ export default function EditUser() {
 
   const { data } = useUserQuery(userId!);
 
-  const [userInfo, setUserInfo] = useState<TUserResponse>({} as TUserResponse);
+  const [userInfo, setUserInfo] = useState<TUserResponse>({}as TUserResponse);
 
   useEffect(() => {
     setUserInfo({ ...data! });
@@ -61,7 +60,7 @@ export default function EditUser() {
               name="firstName"
               label="First Name "
               variant="outlined"
-              value={userInfo.firstName}
+              value={userInfo?.firstName || ""}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -73,7 +72,7 @@ export default function EditUser() {
               name="lastName"
               label="Last Name "
               variant="outlined"
-              value={userInfo.lastName}
+              value={ userInfo?.lastName || ""}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -86,7 +85,7 @@ export default function EditUser() {
               name="email"
               label="Your Email Address "
               variant="outlined"
-              value={userInfo.email}
+              value={userInfo?.email || ""}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -98,7 +97,7 @@ export default function EditUser() {
               name="userName"
               label="Username (example: Bret) "
               variant="outlined"
-              value={userInfo.userName}
+              value={userInfo?.userName || ""}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -111,7 +110,7 @@ export default function EditUser() {
               label="Gender "
               id="gender"
               variant="outlined"
-              value={userInfo.gender}
+              value={userInfo?.gender || ""}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -124,7 +123,7 @@ export default function EditUser() {
               label="Age "
               id="age"
               variant="outlined"
-              value={userInfo.age}
+              value={ userInfo?.age || ""}
             />
           </Grid>
           <Grid item xs={12} md={12}>
@@ -136,7 +135,7 @@ export default function EditUser() {
               name="role"
               label="Role (User, Editor, Moderator) "
               variant="outlined"
-              value={userInfo.role}
+              value={ userInfo?.role || ""}
             />
           </Grid>
         </Grid>

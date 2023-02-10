@@ -46,9 +46,7 @@ export const usersApi = createApi({
       query: (id) => ({
         url: `user/${id}`,
         method: "delete",
-        headers: {
-          
-        }
+        headers: {},
       }),
       invalidatesTags: ["Users"],
     }),

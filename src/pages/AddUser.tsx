@@ -1,6 +1,5 @@
 import { Container, Grid, Typography, Button } from "@mui/material";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
 import { Form, Input } from "../components/custom-styles/Form";
 
@@ -40,6 +39,7 @@ export default function AddUser() {
     } catch (err: any) {
       toast.error(err.data.error);
     }
+
   };
 
   return (
@@ -49,7 +49,7 @@ export default function AddUser() {
         <Typography variant="h1" sx={{ py: 2 }}>
           Personal Information
         </Typography>
-        <Grid container spacing={4}>
+        <Grid container spacing={1}>
           <Grid item xs={12} md={6}>
             <Input
               onChange={handleChange}

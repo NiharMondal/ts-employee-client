@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import PrivateOutlet from "./components/PrivateOutlet";
-import AuthLayout from "./layout/AuthLayout";
+import PrivateOutlet from "./layout/AuthLayout/PrivateOutlet";
+import AuthLayout from "./layout/AuthLayout/AuthLayout";
 import RootLayout from "./layout/RootLayout/RootLayout";
 
 import {
@@ -20,13 +20,13 @@ export const router = createBrowserRouter([
     children: [
       { path: "/", element: <Navigate to="/users" /> },
       {
-        path: "/users",
+        path: "users",
         element: <App />,
+        index: true,
       },
       {
         path: "users/:userId",
         element: <SingleUser />,
-        
       },
 
       {
@@ -45,22 +45,23 @@ export const router = createBrowserRouter([
       },
     ],
   },
-
   {
     path: "/auth",
     element: <AuthLayout />,
 
     children: [
       {
+        path: "login",
+        element: <Login />,
+        index: true,
+      },
+      {
         path: "register",
         element: <Register />,
       },
-      {
-        path: "login",
-        element: <Login />,
-      },
     ],
   },
+
   {
     path: "*",
     element: <NotFound />,

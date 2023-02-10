@@ -8,21 +8,23 @@ import {
   Typography,
   Avatar,
 } from "@mui/material";
+
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { NavLink } from "../../components/CustomLink";
+
+import { selectCurrentUser } from "../../redux/slice/authSlice";
+import { useSelector } from "react-redux";
+
+//props type
 type TopBarProps = {
   handleDrawerToggle: () => void;
 };
-type UserType = {
-  name: string;
-  email?: string;
-};
 
 export default function TopAppbar({ handleDrawerToggle }: TopBarProps) {
-  const [auth, setAuth] = useState<UserType>({ name: "nihar", email: "" });
-  const slicedPart = auth.name.slice(0, 1);
+  const user = useSelector(selectCurrentUser);
+  const slicedPart = user?.email.slice(0, 1);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -48,9 +50,7 @@ export default function TopAppbar({ handleDrawerToggle }: TopBarProps) {
           </IconButton>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}>
-            <NavLink to="/users">
-              HOME
-            </NavLink>
+            <NavLink to="/users">HOME</NavLink>
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}>
             <NavLink to="/admin/add">ADD USER</NavLink>
@@ -58,7 +58,7 @@ export default function TopAppbar({ handleDrawerToggle }: TopBarProps) {
 
           <Box sx={{ flexGrow: 1, display: { xs: "block", md: "none" } }} />
           <Box>
-            {auth.name ? (
+            {user?.email ? (
               <React.Fragment>
                 <Avatar
                   aria-label="account of current user"
@@ -67,7 +67,7 @@ export default function TopAppbar({ handleDrawerToggle }: TopBarProps) {
                   onClick={handleMenu}
                   sx={{ cursor: "pointer", color: "cyan", background: "blue" }}
                 >
-                  {slicedPart.toUpperCase()}
+                  {slicedPart?.toUpperCase()}
                 </Avatar>
                 <Menu
                   sx={{

@@ -6,6 +6,8 @@ type NavProps = {
   title: string;
   path: string;
 };
+
+
 export const nav: NavProps[] = [
   {
     title: "Add Users",
@@ -13,8 +15,9 @@ export const nav: NavProps[] = [
   },
 ];
 
+
 //initial state
-export const initialState: TUser = {
+export const initialState:TUser = {
   firstName: "",
   lastName: "",
   email: "",
@@ -23,6 +26,9 @@ export const initialState: TUser = {
   age: "",
   role: "",
 };
+
+
+
 //initial state types
 export type TUser = {
   firstName: string;
@@ -33,6 +39,9 @@ export type TUser = {
   age: string;
   role: string;
 };
+
+
+
 export type TUserResponse = {
   _id: string;
   firstName: string;
@@ -42,6 +51,10 @@ export type TUserResponse = {
   gender: string;
   age: string;
   role: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 };
+
+
+
+

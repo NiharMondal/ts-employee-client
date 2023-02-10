@@ -15,9 +15,9 @@ export const Form = styled("form")(({ theme }) => ({
 }));
 
 export const Input = styled(TextField)(({ theme }) => ({
-  margin: theme.spacing(.1, 0),
+  margin: theme.spacing(.7, 0),
   [theme.breakpoints.up("sm")]: {
-    margin: theme.spacing(.3,0),
+    margin: theme.spacing(1.3,0),
   },
   "& .MuiInputLabel-root, .MuiOutlinedInput-input": {
     color: "#fff",

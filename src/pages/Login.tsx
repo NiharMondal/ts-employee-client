@@ -10,15 +10,52 @@ import {
 } from "@mui/material";
 import { Form, Input } from "../components/custom-styles/Form";
 import Logo from "../components/Logo";
+import { LoginRequest, useLoginUserMutation } from "../redux/api/authApi";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../redux/slice/authSlice";
+import { toast } from "react-toastify";
+import CustomisedToaster from "../components/CustomisedToaster";
 
 export default function Login() {
-  const nevigate = useNavigate();
-  const [show, setShow] = useState<boolean>(false);
+  const [loginUser] = useLoginUserMutation();
+  
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [show, setShow] = useState(false);
+
+  const [formState, setFormState] = useState<LoginRequest>({
+    email: "",
+    password: "",
+  });
+
+  //handle change input field
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormState({
+      ...formState,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const showPass = () => {
     setShow(!show);
   };
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const loginData = await loginUser(formState).unwrap();
+      dispatch(setCredentials(loginData));
+    
+      navigate("/users");
+    } catch (err: any) {
+      toast.error(err.data.error as any);
+    }
+  };
+
   return (
     <Container sx={{ mx: "auto", mt: 5 }}>
+      <CustomisedToaster />
       <Box component="div" sx={{ mb: { xs: 3, sm: 0 } }}>
         <Logo illustraion="/mock-images/logo.png" />
       </Box>
@@ -42,14 +79,22 @@ export default function Login() {
             />
           </Grid>
           <Grid item xs={12} sm={12} md={6}>
-            <Form>
+            <Form onSubmit={handleLogin}>
               <Typography variant="h1" sx={{ py: 3 }}>
                 Login your account
               </Typography>
 
-              <Input fullWidth label="Your email addrress" type="email" />
               <Input
+                onChange={handleChange}
                 fullWidth
+                label="Your email addrress"
+                type="email"
+                name="email"
+              />
+              <Input
+                onChange={handleChange}
+                fullWidth
+                name="password"
                 label="Your Password"
                 id="outlined-end-adornment"
                 type={show ? "text" : "password"}
@@ -71,6 +116,7 @@ export default function Login() {
                 }}
               />
               <Button
+                type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ py: 2, color: "darker" }}
@@ -83,7 +129,7 @@ export default function Login() {
               >
                 Don't you have an account?{" "}
                 <span
-                  onClick={() => nevigate("/auth/register")}
+                  onClick={() => navigate("/auth/register")}
                   style={{ cursor: "pointer", color: "#005A95" }}
                 >
                   Register here
