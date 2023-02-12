@@ -18,7 +18,7 @@ import CustomisedToaster from "../components/CustomisedToaster";
 
 export default function Login() {
   const [loginUser] = useLoginUserMutation();
-  
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
@@ -46,10 +46,9 @@ export default function Login() {
     try {
       const loginData = await loginUser(formState).unwrap();
       dispatch(setCredentials(loginData));
-    
       navigate("/users");
     } catch (err: any) {
-      toast.error(err.data.error as any);
+      toast.error(err.data.error);
     }
   };
 

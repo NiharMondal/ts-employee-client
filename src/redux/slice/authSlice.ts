@@ -1,12 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-
 import { RootState } from "../store";
 import { User } from "../api/authApi";
-
-
-
 
 export type AuthState = {
   user: User | null;
@@ -21,13 +17,25 @@ export const auth = createSlice({
       state,
       { payload: { user, token } }: PayloadAction<{ user: User; token: string }>
     ) => {
+      sessionStorage.setItem(
+        "auth_token",
+        JSON.stringify({
+          user: user,
+          token: token,
+        })
+      );
       state.user = user;
       state.token = token;
+    },
+    logout: (state) => {
+      sessionStorage.clear();
+      state.user = null;
+      state.token = null;
     },
   },
 });
 
-export const { setCredentials } = auth.actions;
+export const { setCredentials ,logout} = auth.actions;
 
 export default auth.reducer;
 

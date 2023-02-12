@@ -10,12 +10,11 @@ import {
 } from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { NavLink } from "../../components/CustomLink";
-
-import { selectCurrentUser } from "../../redux/slice/authSlice";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/slice/authSlice";
 
 //props type
 type TopBarProps = {
@@ -23,8 +22,11 @@ type TopBarProps = {
 };
 
 export default function TopAppbar({ handleDrawerToggle }: TopBarProps) {
-  const user = useSelector(selectCurrentUser);
-  const slicedPart = user?.email.slice(0, 1);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const sessionUser = JSON.parse(sessionStorage.getItem("auth_token") || "{}");
+
+  const slicedPart = sessionUser?.user?.username.slice(0, 1);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -33,6 +35,10 @@ export default function TopAppbar({ handleDrawerToggle }: TopBarProps) {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleLogout = () => {
+     dispatch(logout());
+    navigate("/auth/login");
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -58,7 +64,7 @@ export default function TopAppbar({ handleDrawerToggle }: TopBarProps) {
 
           <Box sx={{ flexGrow: 1, display: { xs: "block", md: "none" } }} />
           <Box>
-            {user?.email ? (
+            {sessionUser.token ? (
               <React.Fragment>
                 <Avatar
                   aria-label="account of current user"
@@ -74,7 +80,7 @@ export default function TopAppbar({ handleDrawerToggle }: TopBarProps) {
                     mt: "37px",
                     "& .MuiPaper-root": {
                       p: 1,
-                      width: 150,
+                      width: 180,
                     },
                   }}
                   id="menu-appbar"
@@ -91,7 +97,10 @@ export default function TopAppbar({ handleDrawerToggle }: TopBarProps) {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-                  <MenuItem onClick={handleClose}>Logout</MenuItem>
+                  <Typography variant="subtitle1">
+                    Welcome, {sessionUser.user.username}{" "}
+                  </Typography>
+                  <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
                 </Menu>
               </React.Fragment>
             ) : (
@@ -105,3 +114,4 @@ export default function TopAppbar({ handleDrawerToggle }: TopBarProps) {
     </Box>
   );
 }
+

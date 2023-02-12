@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 //import User model from the utils folder
 import { TUser, TUserResponse } from "../../utils/types";
 
-const BASE_URL = "http://localhost:4000/api/v1/";
+const BASE_URL = "https://ts-crud-back-end.onrender.com/api/v1/";
 
 export const usersApi = createApi({
   reducerPath: "usersApi",

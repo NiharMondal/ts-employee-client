@@ -27,6 +27,7 @@ export default function Register() {
     }
     if (data && isSuccess) {
       toast.success("User created successfully");
+      navigate("/users");
     }
   }, [data, isSuccess, error, isError, navigate]);
   //show and hide password
@@ -55,10 +56,7 @@ export default function Register() {
 
     try {
       const user = await register(formState).unwrap();
-       dispatch(setCredentials(user));
-      setTimeout(() => {
-        navigate("/users");
-      }, 2000);
+      dispatch(setCredentials(user));
     } catch (e: any) {
       toast.error(e.data.error);
     }
