@@ -20,10 +20,10 @@ export const Input = styled(TextField)(({ theme }) => ({
     margin: theme.spacing(1.3,0),
   },
   "& .MuiInputLabel-root, .MuiOutlinedInput-input": {
-    color: "#fff",
+    color: "whitesomke",
   },
   "& label.Mui-focused": {
-    color: "white",
+    color: "green",
   },
   " & .MuiFormHelperText-root": {
     color: "red",

@@ -23,6 +23,7 @@ import { useAllUsersQuery, useDeleteUserMutation } from "../redux/api/usersApi";
 import { Link, useNavigate } from "react-router-dom";
 import Error from "../components/Error";
 import { CustomTableCell } from "../components/custom-styles/TableCell";
+import SearchUser from "../components/SearchUser";
 
 export default function App() {
   const { data, error, isLoading } = useAllUsersQuery();
@@ -48,12 +49,14 @@ export default function App() {
   };
   return (
     <Box>
-      
       {isLoading && <LinearProgress sx={{ height: "5px", width: "100%" }} />}
       <Container>
+
+        <SearchUser/>
+        <Typography variant="h3" sx={{pt:2}}>Users List</Typography>
         <CustomisedToaster/>
         {error && <Error />}
-        <TableContainer component={Paper} sx={{ mt: 5 }}>
+        <TableContainer component={Paper} sx={{ mt: 2 }}>
           <Table size="small" aria-label="a dense table">
             <TableHead>
               <TableRow sx={{ backgroundColor: "black" }}>

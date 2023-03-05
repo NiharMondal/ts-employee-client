@@ -25,6 +25,10 @@ export const usersApi = createApi({
       query: () => "user",
       providesTags: ["Users"],
     }),
+    queringUsers: builder.query<TUserResponse[], any>({
+      query: (arg) => `user?gender=${arg.gender}&role=${arg.role}`,
+      providesTags: ["Users"],
+    }),
 
     //get single user by id
     user: builder.query<TUserResponse, string>({
@@ -59,4 +63,5 @@ export const {
   useAddUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
+  useQueringUsersQuery,
 } = usersApi;
