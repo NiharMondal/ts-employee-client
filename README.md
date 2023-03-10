@@ -15,3 +15,4 @@ It is a React, Typescript project. In this project we can perform a crud operati
 - React-router-dom ^6.4.5
 - React-toastify(shows success or error message in ui)
 - Material Icon (for Icon)
+
