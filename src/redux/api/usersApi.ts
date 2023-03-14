@@ -20,11 +20,7 @@ export const usersApi = createApi({
       invalidatesTags: ["Users"],
     }),
 
-    //get all users
-    allUsers: builder.query<TUserResponse[], void>({
-      query: () => "user",
-      providesTags: ["Users"],
-    }),
+
 
     //get single user by id
     user: builder.query<TUserResponse, string>({
@@ -54,7 +50,6 @@ export const usersApi = createApi({
 });
 
 export const {
-  useAllUsersQuery,
   useUserQuery,
   useAddUserMutation,
   useUpdateUserMutation,

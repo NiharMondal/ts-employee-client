@@ -7,7 +7,6 @@ type NavProps = {
   path: string;
 };
 
-
 export const nav: NavProps[] = [
   {
     title: "Add Users",
@@ -15,9 +14,8 @@ export const nav: NavProps[] = [
   },
 ];
 
-
 //initial state
-export const initialState:TUser = {
+export const initialState: TUser = {
   firstName: "",
   lastName: "",
   email: "",
@@ -26,8 +24,6 @@ export const initialState:TUser = {
   age: "",
   role: "",
 };
-
-
 
 //initial state types
 export type TUser = {
@@ -39,8 +35,6 @@ export type TUser = {
   age: string;
   role: string;
 };
-
-
 
 export type TUserResponse = {
   _id: string;
@@ -55,6 +49,9 @@ export type TUserResponse = {
   updatedAt: string;
 };
 
+//send query string
 
-
-
+export type TQuery = {
+  gender: string;
+  role: string;
+};
