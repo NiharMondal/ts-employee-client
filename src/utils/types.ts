@@ -36,6 +36,7 @@ export type TUser = {
   role: string;
 };
 
+//user response from server
 export type TUserResponse = {
   _id: string;
   firstName: string;
@@ -49,8 +50,8 @@ export type TUserResponse = {
   updatedAt: string;
 };
 
-//send query string
 
+//send query string
 export type TQuery = {
   gender: string;
   role: string;
