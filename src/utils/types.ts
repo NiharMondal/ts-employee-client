@@ -50,9 +50,8 @@ export type TUserResponse = {
   updatedAt: string;
 };
 
-
 //send query string
 export type TQuery = {
-  gender: string;
-  role: string;
+  gender: string | null;
+  role: string | null;
 };

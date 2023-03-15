@@ -1,9 +1,18 @@
-import { Container, Box, Typography, MenuItem, Stack } from "@mui/material";
-import { useEffect, useState } from "react";
+import {
+  Container,
+  Box,
+  Typography,
+  MenuItem,
+  Stack,
+  LinearProgress,
+} from "@mui/material";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Input } from "../components/custom-styles/Form";
+import Error from "../components/Error";
 
 import UserTable from "../components/UserTable";
+import { useGetAllUsersQuery } from "../redux/api/usersApi";
 
 const gender = [
   { value: "", label: "Select Gender" },
@@ -20,8 +29,6 @@ const role = [
 export default function App() {
   const [query, setQuery] = useState({ gender: "", role: "" });
   const [searchParams, setSearchParams] = useSearchParams(query);
-  console.log(query);
-  const [userData, setUserData] = useState();
 
   const sex = searchParams.get("gender");
   const userRole = searchParams.get("role");
@@ -36,19 +43,18 @@ export default function App() {
     });
   };
 
-  useEffect(() => {
-    async function fetchUserData() {
-      fetch(
-        `https://ts-crud-back-end.onrender.com/api/v1/user?gender=${sex}&role=${userRole}`
-      )
-        .then((res) => res.json())
-        .then((uData) => setUserData(uData));
-    }
-    fetchUserData();
-  }, [sex, userRole]);
-
+  const {
+    data: userData,
+    isLoading,
+    error,
+  } = useGetAllUsersQuery({
+    gender: sex,
+    role: userRole,
+  });
   return (
     <Box>
+      {isLoading && <LinearProgress sx={{ height: "5px", width: "100%" }} />}
+      {error && <Error />}
       <Container>
         <Box sx={{ py: 2 }}>
           <Typography variant="h3">

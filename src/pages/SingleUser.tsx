@@ -7,14 +7,17 @@ import {
   Divider,
 } from "@mui/material";
 import React from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Error from "../components/Error";
 import { useUserQuery } from "../redux/api/usersApi";
 
 export default function SingleUser() {
+  const navigate = useNavigate();
   const { userId } = useParams();
   const { data, error, isLoading, isSuccess } = useUserQuery(userId!);
-
+  const goBack = () => {
+    navigate(-1);
+  };
   return (
     <React.Fragment>
       {isLoading && <LinearProgress sx={{ height: "5px", width: "100%" }} />}
@@ -34,7 +37,7 @@ export default function SingleUser() {
 
             <Typography variant="h4">
               Full name: {data.firstName}
-              <span style={{marginLeft: '5px'}}>{data.lastName}</span>
+              <span style={{ marginLeft: "5px" }}>{data.lastName}</span>
             </Typography>
             <Typography variant="subtitle1">
               Email Address: {data.email}
@@ -43,8 +46,13 @@ export default function SingleUser() {
             <Typography variant="h5">Gender: {data.gender}</Typography>
             <Typography variant="h5">Age: {data.age}</Typography>
             <Typography variant="h5">Role: {data.role}</Typography>
-            <Button variant="contained" sx={{ mt: 2 }} color="success">
-              <Link to="/users">Go Back</Link>
+            <Button
+              variant="contained"
+              sx={{ mt: 2 }}
+              color="success"
+              onClick={goBack}
+            >
+              Go Back
             </Button>
           </Paper>
         )}

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 //import User model from the utils folder
-import { TUser, TUserResponse } from "../../utils/types";
+import { TUser, TUserResponse, TQuery } from "../../utils/types";
 
 const BASE_URL = "https://ts-crud-back-end.onrender.com/api/v1/";
 
@@ -20,7 +20,9 @@ export const usersApi = createApi({
       invalidatesTags: ["Users"],
     }),
 
-
+    getAllUsers: builder.query<TUserResponse[], TQuery>({
+      query: (arg) => `user?gender=${arg.gender}&role=${arg.role}`,
+    }),
 
     //get single user by id
     user: builder.query<TUserResponse, string>({
@@ -51,6 +53,7 @@ export const usersApi = createApi({
 
 export const {
   useUserQuery,
+  useGetAllUsersQuery,
   useAddUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
