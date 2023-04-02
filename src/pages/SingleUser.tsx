@@ -36,8 +36,7 @@ export default function SingleUser() {
             <Divider sx={{ mb: 2 }} />
 
             <Typography variant="h4">
-              Full name: {data.firstName}
-              <span style={{ marginLeft: "5px" }}>{data.lastName}</span>
+              Full name: {data.fullName}
             </Typography>
             <Typography variant="subtitle1">
               Email Address: {data.email}

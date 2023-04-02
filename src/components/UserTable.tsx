@@ -77,7 +77,7 @@ const UserTable = ({ userData }: Props) => {
                     {index + 1}
                   </TableCell>
                   <TableCell align="right">
-                    {user.firstName} <span>{user.lastName}</span>{" "}
+                    {user.fullName}
                   </TableCell>
                   <TableCell align="right">{user.email}</TableCell>
                   <TableCell align="right">{user.gender}</TableCell>
