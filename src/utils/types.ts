@@ -39,7 +39,8 @@ export type TUser = {
 //user response from server
 export type TUserResponse = {
   _id: string;
-  fullName: string;
+  firstName: string;
+  lastName: string;
   email: string;
   userName: string;
   gender: string;
