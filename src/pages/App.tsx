@@ -1,4 +1,4 @@
-import { Box, Typography, Toolbar, IconButton } from "@mui/material";
+import { Box, Typography, Toolbar, IconButton, Button } from "@mui/material";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { MenuOutlined } from "@mui/icons-material";
@@ -7,9 +7,13 @@ import { useGetAllUsersQuery } from "../redux/api/usersApi";
 import SideBar from "../components/SideBar";
 import { TQuery } from "../utils/types";
 
+import { useNavigate } from "react-router-dom";
+
 export const DRAWER_WIDTH = 270;
 
 export default function App() {
+  const navigate = useNavigate();
+
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
 
   const handleDrawerToggle = () => {
@@ -57,6 +61,7 @@ export default function App() {
         <Toolbar
           sx={{
             backgroundColor: "background.paper",
+            mb: 2,
           }}
         >
           <IconButton
@@ -75,8 +80,12 @@ export default function App() {
           >
             ALL USER
           </Typography>
+
           <Box component="div" />
         </Toolbar>
+        <Button variant="contained" onClick={() => navigate("/admin/add")}>
+          ADD USER
+        </Button>
         <Box>
           <UserTable userData={userData} />
         </Box>
