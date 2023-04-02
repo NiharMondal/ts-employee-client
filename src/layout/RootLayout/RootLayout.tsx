@@ -1,29 +1,15 @@
-import React, { useState } from "react";
-
-import { Box } from "@mui/material";
+import { Box, Toolbar } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import TopAppbar from "./TopAppbar";
-import SideBar from "./SideBar";
 
 export default function RootLayout() {
-  const [mobileOpen, setMobileOpen] = useState<boolean>(false);
-  const handleClose = () => {
-    setMobileOpen(!mobileOpen);
-  };
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
   return (
-    <React.Fragment>
-      <TopAppbar handleDrawerToggle={handleDrawerToggle} />
-      <SideBar
-        mobileOpen={mobileOpen}
-        handleClose={handleClose}
-        handleDrawerToggle={handleDrawerToggle}
-      />
+    <Box>
+      <TopAppbar />
       <Box component="main">
+        <Toolbar />
         <Outlet />
       </Box>
-    </React.Fragment>
+    </Box>
   );
 }

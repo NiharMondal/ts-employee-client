@@ -26,6 +26,7 @@ type Props = {
   userData: TUserResponse[] | undefined;
 };
 const UserTable = ({ userData }: Props) => {
+  console.log(userData)
   const navigate = useNavigate();
   const [deleteUser] = useDeleteUserMutation();
 
