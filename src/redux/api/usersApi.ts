@@ -5,9 +5,10 @@ import { TUser, TUserResponse, TQuery } from "../../utils/types";
 
 const BASE_URL = "https://ts-crud-back-end.onrender.com/api/v1/";
 
+const LOCAL_URL = "http://localhost:4000/api/v1/";
 export const usersApi = createApi({
   reducerPath: "usersApi",
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: LOCAL_URL }),
   tagTypes: ["Users"],
   endpoints: (builder) => ({
     //add user
@@ -21,7 +22,11 @@ export const usersApi = createApi({
     }),
 
     getAllUsers: builder.query<TUserResponse[], TQuery>({
-      query: (arg) => `user?gender=${arg.gender}&role=${arg.role}`,
+      query: ({ gender, role, status, country }) => {
+        return {
+          url: `user?gender=${gender}&role=${role}&status=${status}&country=${country}`,
+        };
+      },
     }),
 
     //get single user by id

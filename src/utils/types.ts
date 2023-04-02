@@ -1,6 +1,3 @@
-//drawer width
-export const DRAWER_WIDTH = 300;
-
 //nav link data
 type NavProps = {
   title: string;
@@ -39,8 +36,7 @@ export type TUser = {
 //user response from server
 export type TUserResponse = {
   _id: string;
-  firstName: string;
-  lastName: string;
+  fullName:string
   email: string;
   userName: string;
   gender: string;
@@ -52,6 +48,8 @@ export type TUserResponse = {
 
 //send query string
 export type TQuery = {
-  gender: string | null;
-  role: string | null;
+  gender?: string;
+  role?: string;
+  status?: string;
+  country?: string;
 };
