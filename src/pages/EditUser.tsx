@@ -74,7 +74,7 @@ export default function EditUser() {
               name="email"
               label="Your Email Address "
               variant="outlined"
-              value={userInfo?.email || ""}
+              value={userInfo?.email }
             />
           </Grid>
           <Grid item xs={12} md={6}>

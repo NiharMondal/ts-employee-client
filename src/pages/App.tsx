@@ -24,6 +24,8 @@ export default function App() {
   console.log(query);
   const [searchParams, setSearchParams] = useSearchParams(query);
 
+
+  
   //handle change event
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
