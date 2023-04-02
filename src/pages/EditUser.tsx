@@ -60,21 +60,10 @@ export default function EditUser() {
               name="firstName"
               label="First Name "
               variant="outlined"
-              value={userInfo?.firstName || ""}
+              value={userInfo?.fullName || ""}
             />
           </Grid>
-          <Grid item xs={12} md={6}>
-            <Input
-              onChange={handleChange}
-              autoComplete="off"
-              fullWidth
-              color="secondary"
-              name="lastName"
-              label="Last Name "
-              variant="outlined"
-              value={ userInfo?.lastName || ""}
-            />
-          </Grid>
+          
           <Grid item xs={12} md={6}>
             <Input
               onChange={handleChange}
