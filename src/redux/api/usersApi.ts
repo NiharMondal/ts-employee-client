@@ -3,12 +3,12 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 //import User model from the utils folder
 import { TUser, TUserResponse, TQuery } from "../../utils/types";
 
-// const BASE_URL = "https://ts-crud-back-end.onrender.com/api/v1/";
+const BASE_URL = "https://ts-crud-back-end.onrender.com/api/v1/";
 
-const LOCAL_URL = "http://localhost:4000/api/v1/";
+
 export const usersApi = createApi({
   reducerPath: "usersApi",
-  baseQuery: fetchBaseQuery({ baseUrl: LOCAL_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   tagTypes: ["Users"],
   endpoints: (builder) => ({
     //add user
@@ -27,7 +27,7 @@ export const usersApi = createApi({
           url: `user?status=${status}&gender=${gender}&role=${role}&country=${country}&limit=${limit}&page=${page}`,
         };
       },
-
+        //reverse main arry
       transformResponse: (res: TUserResponse[]) => {
         return res.reverse();
       },
@@ -49,6 +49,8 @@ export const usersApi = createApi({
       }),
       invalidatesTags: ["Users"],
     }),
+
+
     //delete user by id
     deleteUser: builder.mutation<void, string>({
       query: (id) => ({
