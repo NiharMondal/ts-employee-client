@@ -3,16 +3,16 @@ import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
 type LogoProps = {
   illustraion: string;
-  handleClose?: ()=>void
+  alt?: string;
 };
-export default function Logo({ illustraion,handleClose }: LogoProps) {
+export default function Logo({ illustraion, alt }: LogoProps) {
   return (
     <Link to="/">
       <Box
         component="img"
         sx={{ height: 40, width: 40 }}
         src={illustraion}
-        onClick={handleClose}
+        alt={alt}
       />
     </Link>
   );

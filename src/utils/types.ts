@@ -13,35 +13,39 @@ export const nav: NavProps[] = [
 
 //initial state
 export const initialState: TUser = {
-  firstName: "",
-  lastName: "",
+  fullName: "",
   email: "",
-  userName: "",
   gender: "",
-  age: "",
+  age: 18,
+  salary: 100,
+  status: "",
   role: "",
+  country: "",
 };
 
 //initial state types
 export type TUser = {
-  firstName: string;
-  lastName: string;
+  fullName: string;
   email: string;
-  userName: string;
   gender: string;
-  age: string;
+  age: number;
+  salary: number;
+  status: string;
   role: string;
+  country: string;
 };
 
 //user response from server
 export type TUserResponse = {
   _id: string;
-  fullName:string
+  fullName: string;
   email: string;
-  userName: string;
   gender: string;
-  age: string;
+  age: number;
+  salary: number;
+  status: string;
   role: string;
+  country: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -52,4 +56,7 @@ export type TQuery = {
   role?: string;
   status?: string;
   country?: string;
+  limit?: string;
+  page?: string;
+  sort?: string;
 };

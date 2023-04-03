@@ -1,4 +1,4 @@
-import { Container, Grid, Typography, Button, Stack } from "@mui/material";
+import { Container, Grid, Typography, Button, MenuItem } from "@mui/material";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { Form, Input } from "../components/custom-styles/Form";
@@ -6,7 +6,7 @@ import { useUpdateUserMutation } from "../redux/api/usersApi";
 import { TUserResponse } from "../utils/types";
 import CustomisedToaster from "../components/CustomisedToaster";
 import { useUserQuery } from "../redux/api/usersApi";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 export default function EditUser() {
   const navigate = useNavigate();
   const [updateUser] = useUpdateUserMutation();
@@ -14,7 +14,7 @@ export default function EditUser() {
 
   const { data } = useUserQuery(userId!);
 
-  const [userInfo, setUserInfo] = useState<TUserResponse>({}as TUserResponse);
+  const [userInfo, setUserInfo] = useState<TUserResponse>({} as TUserResponse);
 
   useEffect(() => {
     setUserInfo({ ...data! });
@@ -28,6 +28,7 @@ export default function EditUser() {
   //handle update
   const handleUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     try {
       await updateUser(userInfo);
 
@@ -36,95 +37,127 @@ export default function EditUser() {
         navigate("/users");
       }, 2000);
     } catch (err: any) {
-      toast.error(err.data.error);
+      toast.error(err.data.message);
     }
   };
 
   return (
-    <Container sx={{ mt: 4 }}>
+    <Container>
       <Form onSubmit={handleUpdate}>
         <CustomisedToaster />
-        <Stack sx={{ pb: 3, justifyContent: "space-between" }} direction="row">
-          <Typography variant="h1">Update Information</Typography>
-          <Button variant="contained">
-            <Link to="/users">Cancel</Link>
-          </Button>
-        </Stack>
-        <Grid container spacing={4}>
+        <Typography variant="h1" sx={{ py: 2 }}>
+          Personal Information
+        </Typography>
+        <Grid container spacing={1}>
           <Grid item xs={12} md={6}>
             <Input
               onChange={handleChange}
-              autoComplete="off"
               color="secondary"
               fullWidth
               name="fullName"
-              label="First Name "
-              variant="outlined"
-              value={userInfo?.fullName || ""}
+              label="Fullname *"
+              value={userInfo.fullName || ""}
             />
           </Grid>
-          
           <Grid item xs={12} md={6}>
             <Input
               onChange={handleChange}
-              autoComplete="off"
+              fullWidth
+              color="secondary"
+              name="status"
+              select
+              label="Select user role *"
+              value={userInfo.status || ""}
+            >
+              {["Active", "Inactive"].map((val) => (
+                <MenuItem key={val} value={val}>
+                  {val}
+                </MenuItem>
+              ))}
+            </Input>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Input
+              onChange={handleChange}
               fullWidth
               type="email"
               color="secondary"
               name="email"
-              label="Your Email Address "
-              variant="outlined"
-              value={userInfo?.email }
+              label="Your Email Address *"
+              value={userInfo.email || ""}
             />
           </Grid>
           <Grid item xs={12} md={6}>
             <Input
               onChange={handleChange}
-              autoComplete="off"
               fullWidth
               color="secondary"
-              name="userName"
-              label="Username (example: Bret) "
-              variant="outlined"
-              value={userInfo?.userName || ""}
-            />
+              name="country"
+              select
+              label="Select country *"
+              value={userInfo.country || ""}
+            >
+              {["Bangladesh", "India", "USA", "UK"].map((val) => (
+                <MenuItem key={val} value={val}>
+                  {val}
+                </MenuItem>
+              ))}
+            </Input>
           </Grid>
           <Grid item xs={12} md={6}>
             <Input
               onChange={handleChange}
-              autoComplete="off"
               color="secondary"
               fullWidth
               name="gender"
-              label="Gender "
-              id="gender"
-              variant="outlined"
-              value={userInfo?.gender || ""}
+              label="Gender *"
+              select
+              value={userInfo.gender || ""}
+            >
+              {["Male", "Female"].map((val) => (
+                <MenuItem key={val} value={val}>
+                  {val}
+                </MenuItem>
+              ))}
+            </Input>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Input
+              onChange={handleChange}
+              type="number"
+              color="secondary"
+              fullWidth
+              name="age"
+              label="Age *"
+              value={userInfo.age || ""}
             />
           </Grid>
           <Grid item xs={12} md={6}>
             <Input
               onChange={handleChange}
-              autoComplete="off"
-              color="secondary"
-              fullWidth
-              name="age"
-              label="Age "
-              id="age"
-              variant="outlined"
-              value={ userInfo?.age || ""}
-            />
-          </Grid>
-          <Grid item xs={12} md={12}>
-            <Input
-              onChange={handleChange}
-              autoComplete="off"
               color="secondary"
               fullWidth
               name="role"
-              label="Role (User, Editor, Moderator) "
-              variant="outlined"
-              value={ userInfo?.role || ""}
+              label="Role *"
+              select
+              value={userInfo.role || ""}
+            >
+              {["User", "Moderator", "Editor", "Admin"].map((val) => (
+                <MenuItem key={val} value={val}>
+                  {val}
+                </MenuItem>
+              ))}
+            </Input>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Input
+              onChange={handleChange}
+              type="number"
+              color="secondary"
+              fullWidth
+              name="salary"
+              label="Salary *"
+              value={userInfo.salary || ""}
             />
           </Grid>
         </Grid>
@@ -134,7 +167,7 @@ export default function EditUser() {
           sx={{ py: 2, mt: 2 }}
           type="submit"
         >
-          Update User
+          Create User
         </Button>
       </Form>
     </Container>

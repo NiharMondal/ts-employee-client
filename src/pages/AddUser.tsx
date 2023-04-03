@@ -1,6 +1,6 @@
-import { Container, Grid, Typography, Button } from "@mui/material";
+import { Container, Grid, Typography, Button, MenuItem } from "@mui/material";
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { Form, Input } from "../components/custom-styles/Form";
 
 import { useAddUserMutation } from "../redux/api/usersApi";
@@ -10,17 +10,8 @@ import { initialState } from "../utils/types";
 export default function AddUser() {
   const [userInfo, setUserInfo] = useState(initialState);
 
-  const [addUser, { data, isSuccess, error, isError }] = useAddUserMutation();
+  const [addUser] = useAddUserMutation();
 
-  //shows success and error message in ui
-  useEffect((): void => {
-    if (error && isError) {
-      toast.error("Please provide every input field");
-    }
-    if (data && isSuccess) {
-      toast.success("User created successfully");
-    }
-  }, [data, isSuccess, error, isError]);
 
   //hangle change event
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,15 +26,15 @@ export default function AddUser() {
     event.preventDefault();
 
     try {
-      await addUser(userInfo);
+      await addUser(userInfo).unwrap();
+      toast.success("User created successfully");
     } catch (err: any) {
-      toast.error(err.data.error);
+      toast.error(err.data.message);
     }
-
   };
 
   return (
-    <Container sx={{ mt: 4 }}>
+    <Container>
       <Form onSubmit={handleSubmit}>
         <CustomisedToaster />
         <Typography variant="h1" sx={{ py: 2 }}>
@@ -56,32 +47,38 @@ export default function AddUser() {
               autoComplete="off"
               color="secondary"
               fullWidth
-              name="firstName"
-              label="First Name *"
-              variant="outlined"
+              name="fullName"
+              label="Fullname *"
+              value={userInfo.fullName}
             />
           </Grid>
           <Grid item xs={12} md={6}>
             <Input
               onChange={handleChange}
-              autoComplete="off"
               fullWidth
               color="secondary"
-              name="lastName"
-              label="Last Name *"
-              variant="outlined"
-            />
+              name="status"
+              select
+              label="Select user role *"
+              value={userInfo.status}
+            >
+              {["Active", "Inactive"].map((val) => (
+                <MenuItem key={val} value={val}>
+                  {val}
+                </MenuItem>
+              ))}
+            </Input>
           </Grid>
           <Grid item xs={12} md={6}>
             <Input
               onChange={handleChange}
-              autoComplete="off"
               fullWidth
               type="email"
               color="secondary"
               name="email"
               label="Your Email Address *"
               variant="outlined"
+              value={userInfo.email}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -90,44 +87,72 @@ export default function AddUser() {
               autoComplete="off"
               fullWidth
               color="secondary"
-              name="userName"
-              label="Username *(example: Bret) "
-              variant="outlined"
-            />
+              name="country"
+              select
+              label="Select country *"
+              value={userInfo.country}
+            >
+              {["Bangladesh", "India", "USA", "UK"].map((val) => (
+                <MenuItem key={val} value={val}>
+                  {val}
+                </MenuItem>
+              ))}
+            </Input>
           </Grid>
           <Grid item xs={12} md={6}>
             <Input
               onChange={handleChange}
-              autoComplete="off"
               color="secondary"
               fullWidth
               name="gender"
               label="Gender *"
-              id="gender"
-              variant="outlined"
+              select
+              value={userInfo.gender}
+            >
+              {["Male", "Female"].map((val) => (
+                <MenuItem key={val} value={val}>
+                  {val}
+                </MenuItem>
+              ))}
+            </Input>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Input
+              onChange={handleChange}
+              type="number"
+              color="secondary"
+              fullWidth
+              name="age"
+              label="Age *"
+              value={userInfo.age}
             />
           </Grid>
           <Grid item xs={12} md={6}>
             <Input
               onChange={handleChange}
-              autoComplete="off"
-              color="secondary"
-              fullWidth
-              name="age"
-              label="Age *"
-              id="age"
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={12} md={12}>
-            <Input
-              onChange={handleChange}
-              autoComplete="off"
               color="secondary"
               fullWidth
               name="role"
-              label="Role (User, Editor, Moderator) *"
-              variant="outlined"
+              label="Role *"
+              select
+              value={userInfo.role}
+            >
+              {["User", "Moderator", "Editor", "Admin"].map((val) => (
+                <MenuItem key={val} value={val}>
+                  {val}
+                </MenuItem>
+              ))}
+            </Input>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Input
+              onChange={handleChange}
+              type="number"
+              color="secondary"
+              fullWidth
+              name="salary"
+              label="Salary *"
+              value={userInfo.salary}
             />
           </Grid>
         </Grid>

@@ -21,12 +21,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { TUserResponse } from "../utils/types";
 import { useDeleteUserMutation } from "../redux/api/usersApi";
 import { toast } from "react-toastify";
+import CustomisedToaster from "./CustomisedToaster";
+import Error from "./Error";
 
 type Props = {
   userData: TUserResponse[] | undefined;
+  isError: boolean;
 };
-const UserTable = ({ userData }: Props) => {
-  console.log(userData)
+const UserTable = ({ userData, isError }: Props) => {
+  // const latestData = userData?.reverse();
   const navigate = useNavigate();
   const [deleteUser] = useDeleteUserMutation();
 
@@ -41,21 +44,31 @@ const UserTable = ({ userData }: Props) => {
   const handleDelete = async (id: string) => {
     try {
       if (window.confirm("Do you want to delete this record?")) {
-        await deleteUser(id);
+        await deleteUser(id).unwrap();
         toast.success("User deleted successfully!");
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error.data.message);
     }
   };
   return (
     <Box>
+      <CustomisedToaster />
+
       <TableContainer component={Paper} sx={{ mt: 2 }}>
         <Table size="small" aria-label="a dense table">
           <TableHead>
             <TableRow sx={{ backgroundColor: "black" }}>
               <CustomTableCell align="left">ID</CustomTableCell>
-              {["Fullname", "Email", "Gender", "Role"].map((tHead, index) => (
+              {[
+                "Fullname",
+
+                "Gender",
+                "Role",
+                "Status",
+                "Country",
+                "Salary",
+              ].map((tHead, index) => (
                 <CustomTableCell align="right" key={index}>
                   {tHead}
                 </CustomTableCell>
@@ -67,22 +80,47 @@ const UserTable = ({ userData }: Props) => {
           <TableBody
             sx={{
               "& .MuiTableRow-root:hover": {
-                bgcolor: "whiteSmoke",
+                bgcolor: "white",
               },
             }}
           >
             {userData &&
               userData.map((user, index) => (
-                <TableRow key={index}>
+                <TableRow key={user._id}>
                   <TableCell scope="row" size="medium">
                     {index + 1}
                   </TableCell>
-                  <TableCell align="right">
-                    {user.fullName}
-                  </TableCell>
-                  <TableCell align="right">{user.email}</TableCell>
+                  <TableCell align="right">{user.fullName}</TableCell>
+
                   <TableCell align="right">{user.gender}</TableCell>
                   <TableCell align="right">{user.role}</TableCell>
+                  <TableCell
+                    align="right"
+                    sx={{
+                      color: `${
+                        user.status === "Active"
+                          ? "primary.main"
+                          : "secondary.main"
+                      }`,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {user.status}
+                  </TableCell>
+                  <TableCell align="right">{user.country}</TableCell>
+                  <TableCell
+                    align="right"
+                    sx={{
+                      color: `${
+                        user.status === "Active"
+                          ? "primary.main"
+                          : "secondary.main"
+                      }`,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    $ {user.salary}
+                  </TableCell>
                   <TableCell align="center">
                     <Stack
                       direction="row"
@@ -98,11 +136,10 @@ const UserTable = ({ userData }: Props) => {
                           <EditIcon />
                         </Link>
                       </Button>
-                      {user.createdAt && (
-                        <Button onClick={() => handleDelete(user._id)}>
-                          <DeleteIcon />
-                        </Button>
-                      )}
+
+                      <Button onClick={() => handleDelete(user._id)}>
+                        <DeleteIcon sx={{ color: "secondary.main" }} />
+                      </Button>
                     </Stack>
                   </TableCell>
                 </TableRow>
@@ -110,6 +147,7 @@ const UserTable = ({ userData }: Props) => {
           </TableBody>
         </Table>
       </TableContainer>
+      {isError && <Error message="Something went wrong!" />}
       {userData?.length === 0 && (
         <Typography variant="h3" align="center" py={6}>
           No data found!

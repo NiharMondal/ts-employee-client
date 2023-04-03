@@ -1,23 +1,11 @@
-import { Box, Typography } from "@mui/material";
-
-
-export default function Error() {
+import {  Typography } from "@mui/material";
+type ErrorProps = {
+  message: string
+}
+export default function Error({message}:ErrorProps) {
   return (
-    <Box
-      component="div"
-      sx={{
-        display: "flex",
-        flexBasis: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "600px",
-        width: "100%",
-      }}
-    >
-      <div>
-         <Typography variant="h4">Opps! Check your internet connection</Typography>
-
-      </div>
-    </Box>
+    <Typography variant="h3" align="center" py={6}>
+      No data found!
+    </Typography>
   );
 }

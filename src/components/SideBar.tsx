@@ -1,4 +1,3 @@
-
 import {
   Box,
   Drawer,
@@ -7,8 +6,8 @@ import {
   RadioGroup,
   Radio,
   FormControlLabel,
-  FormGroup,
-  Checkbox,
+  
+  Typography,
 } from "@mui/material";
 
 import { Stack } from "@mui/system";
@@ -18,7 +17,7 @@ import { TQuery } from "../utils/types";
 type SideBarProps = {
   mobileOpen: boolean;
   handleDrawerToggle: () => void;
-  query: TQuery ;
+  query: TQuery;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -29,7 +28,12 @@ const SideBar = ({
   handleChange,
 }: SideBarProps) => {
   const drawer = (
-    <Box sx={{ pl: 5, pt: 2, overflowY: "auto" }}>
+    <Box sx={{ pl: 5, pt: 2, overflowY: "auto", pb: 10 }}>
+      <Box component="div" sx={{ mb: 2 }}>
+        <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+          Sort User according your need
+        </Typography>
+      </Box>
       <Stack direction="column" gap={2}>
         {/* gender */}
         <FormControl>
@@ -200,10 +204,6 @@ const SideBar = ({
           </RadioGroup>
         </FormControl>
       </Stack>
-      <FormGroup>
-        <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
-        <FormControlLabel control={<Checkbox />} label="Disabled" />
-      </FormGroup>
     </Box>
   );
 

@@ -1,10 +1,12 @@
 import {
   LinearProgress,
   Container,
-  Paper,
   Typography,
   Button,
+  CardContent,
+  Card,
   Divider,
+  CardHeader,
 } from "@mui/material";
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -20,31 +22,33 @@ export default function SingleUser() {
   };
   return (
     <React.Fragment>
-      {isLoading && <LinearProgress sx={{ height: "5px", width: "100%" }} />}
-      <Container sx={{ mx: "auto", mt: 4 }}>
-        {error && <Error />}
-        {data && isSuccess && (
-          <Paper sx={{ p: 3, textAlign: "center" }}>
-            <Typography variant="h1" sx={{ py: 1 }}>
-              User Information
-            </Typography>
-            {!data.createdAt && (
-              <Typography variant="subtitle1" sx={{ py: 1 }} color="red">
-                You can not delete demo record!
-              </Typography>
-            )}
-            <Divider sx={{ mb: 2 }} />
+      {isLoading && <LinearProgress />}
 
-            <Typography variant="h4">
-              Full name: {data.fullName}
-            </Typography>
-            <Typography variant="subtitle1">
-              Email Address: {data.email}
-            </Typography>
-            <Typography variant="h5">User Name: {data.userName}</Typography>
-            <Typography variant="h5">Gender: {data.gender}</Typography>
-            <Typography variant="h5">Age: {data.age}</Typography>
-            <Typography variant="h5">Role: {data.role}</Typography>
+      <Container sx={{ mx: "auto", mt: 4 }}>
+        {error && <Error message="Something went wrong!" />}
+
+        {data && isSuccess && (
+          <Card sx={{ p: 3, textAlign: "center" }}>
+            <CardContent>
+              <Typography variant="h4" color="text.secondary" gutterBottom>
+                USER INFORMATION
+              </Typography>
+              <Divider />
+              <CardHeader
+                title={`Name: ${data.fullName}`}
+                subheader={`Email: ${data.email}`}
+              />
+
+              <Typography variant="body1">User Role: {data.role}</Typography>
+              <Typography variant="body1">Country: {data.country}</Typography>
+              <Typography variant="body1">Gender: {data.gender}</Typography>
+              <Typography variant="body1">Age: {data.age}</Typography>
+              <Typography variant="subtitle1">
+                Salary: ${data.salary}
+              </Typography>
+              <Typography variant="body1">Status: {data.status}</Typography>
+              <Typography variant="body1">Gender: {data.gender}</Typography>
+            </CardContent>
             <Button
               variant="contained"
               sx={{ mt: 2 }}
@@ -53,7 +57,7 @@ export default function SingleUser() {
             >
               Go Back
             </Button>
-          </Paper>
+          </Card>
         )}
       </Container>
     </React.Fragment>
