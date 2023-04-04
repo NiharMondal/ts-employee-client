@@ -4,19 +4,15 @@
 
 It is a React, Typescript project. In this project we can perform a crud operation. But withour login or register you can not add, edit and delete user from database!
 
-**Technoloy that are used in this project ---**
+**Technologies that are used in this project ---**
 
 - React
-- Redux toolkit
-- RTK query is used for fetching data from the server. To sum up, all things operations have been done by RTK query.
 - Typescript
+- Redux toolkit (RTK query is used for fetching data from the server. To sum up, all things operations have been done by RTK query.)
+- Authentication(Sign-up, Sign-in, jwt token)
 - Material UI
 - React-router-dom ^6.4.5
 - React-toastify(shows success or error message in ui)
 - Material Icon (for Icon)
 
-**Filter Users according your need! ---**
-
-- Filter by gender
-- Filter by user role
-- Filter by both
+**Filter Employee according your need! ---**
