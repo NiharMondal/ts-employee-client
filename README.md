@@ -1,6 +1,6 @@
 ## Click here to see the website: https://ts-crud.vercel.app/users
 
-#### Here is the server side code: https://github.com/NiharMondal/ts-crud-back-end
+#### Here is the server side code: https://github.com/NiharMondal/ts-employee-back-end
 
 It is a React, Typescript project. In this project we can perform a crud operation. But withour login or register you can not add, edit and delete user from database!
 
