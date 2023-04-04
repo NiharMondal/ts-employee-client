@@ -91,7 +91,7 @@ export default function App() {
             </IconButton>
 
             <Typography variant="subtitle1">
-              TOTAL USER: {userData?.length}
+              TOTAL EMPLOYEE: {userData?.length}
             </Typography>
           </Box>
           <Box sx={{ my: 2, alignItems: "center" }}>
